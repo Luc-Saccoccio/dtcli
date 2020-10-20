@@ -6,7 +6,11 @@ DTCli is a tool to query jokes from three websites : DTC ([DansTonChat](https://
 
 ## Installation
 
-I recommend the use of [pipx](https://pipxproject.github.io/pipx/)
+Using [pipx](https://pipxproject.github.io/pipx/) : 
+
+```shell
+pipx install ./
+```
 
 ## Options
 
