@@ -27,7 +27,7 @@ def test_emojis(title):
         displayed as two
     """
     title_length = len(title)
-    emojis = [c for c in title if c in emoji.UNICODE_EMOJI]
+    emojis = [c for c in title if (c in emoji.UNICODE_EMOJI) or (c in ['︵', '）'])]
     return title_length + len(emojis)
 
 def test_lang():

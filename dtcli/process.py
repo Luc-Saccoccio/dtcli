@@ -18,7 +18,7 @@ def get_soup(url, ignore, verbose):
             sexit(1)
         else:
             return ''
-    return BeautifulSoup(result.text, 'html.parser')
+    return BeautifulSoup(result.content, 'html.parser')
 
 def preprocess(soup, number, website):
     """
@@ -54,6 +54,8 @@ def process(lines, number, website): # Process the lines : format them, highligh
         Highlight and stuff
     """
     text = ""
+    if website == 'nsf':
+        return '\n'.join(lines)
     try:
         for l in lines:
             if l == '':
@@ -92,7 +94,6 @@ def process(lines, number, website): # Process the lines : format them, highligh
             else:
                 text += ''.join(l) + "\n"
     except IndexError:
-        print("Error while processing %s n°%d, url https://danstonchat.com/%d.html" %
-              (website, number, number))
+        print("Error while processing {} n°{}, url {}".format(website, number, {'dtc': "https://danstonchat.com/{}.html", 'bash': "bash.org/?{}"}[website].format(number)))
         sexit(1)
-    return text
+    return text[:-1]

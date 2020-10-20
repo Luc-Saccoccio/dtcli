@@ -21,7 +21,7 @@ setup(
     keywords='dtc, nsf, bash.org, cli',
     description='DTC/NSF/bash.org cli querying tool',
     long_description=long_description(),
-    url='https://github.com/Recidiviste/dtcli',
+    url='https://github.com/Luc-Saccoccio/dtcli',
 
     install_requires=requirements,
     entry_points={
