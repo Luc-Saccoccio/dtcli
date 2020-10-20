@@ -1,3 +1,9 @@
+"""
+    File containing all the
+    functions processing
+    the informations retrieved
+"""
+
 from sys import exit as sexit
 from bs4 import BeautifulSoup
 import requests
@@ -10,8 +16,8 @@ def get_soup(url, ignore, verbose):
     """
     result = requests.get(url)
     if result.status_code != 200:
-        print(color.BOLD + color.YELLOW + "Retrieiving failed : url %s" % url + color.UNDERLINE
-              + url + color.END)
+        print(color.BOLD + color.YELLOW + "Retrieiving failed : url %s" % url
+              + color.UNDERLINE + color.END)
         if verbose:
             print("Error %s, reason : %s" % (result.status_code, result.reason))
         if not ignore:
@@ -43,7 +49,7 @@ def preprocess(soup, number, website):
     else:
         base = soup.find('p', attrs={'class': 'qt'})
         title, title_exist = None, False
-        message = base.text
+        message = base.text if base else ''
 
     lines = message.split("\n")
     return lines, title, title_exist

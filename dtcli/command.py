@@ -31,12 +31,13 @@ def main():
         tmp_url = url.format(args.number)
         soup = get_soup(tmp_url, args.ignore, args.verbose)
         if soup == '':
+            print("Error : Soup's empty, I need another bowl")
             sexit(1)
         lines, title, _ = preprocess(soup, args.number, args.website)
         content = process(lines, number, website)
         # TODO : Test for NSF if the lines can be printed "as it"
     elif args.website in ['dtc', 'bash']: # Else, consider the other passed options
-        conditions = {'force': args.force_title, 'lines': (args.lines != -1),
+        conditions = {'force': (args.force_title and args.website == 'dtc'), 'lines': (args.lines != -1),
                       'over': (args.over != -1), 'under': (args.under != -1)}
         answers = {'force': None, 'lines': None, 'over': None, 'under': None}
         if args.verbose:
@@ -50,10 +51,14 @@ def main():
             soup = get_soup(tmp_url, number, args.ignore)
             if soup != '':
                 lines, title, title_exist = preprocess(soup, number, args.website)
-                content = process(lines, number, args.website)
-                for l in (c for c in conditions if conditions[c] == True):
-                    if args.verbose: print(color.PURPLE + "- testing %s" % l + color.END)
-                    answers[l] = test(l, lines, args.lines, args.over, args.under)  
+                if lines != ['']:
+                    content = process(lines, number, args.website)
+                    for condition in (c for c in conditions if conditions[c]):
+                        if args.verbose: print(color.PURPLE + "- testing {condition}" + color.END)
+                        answers[condition] = test(condition, lines, args.lines, args.over,
+                                                  args.under, title_exist)
+                else:
+                    answers = {}
     else:
         while not soup:
             number = randint(0, 20689) # TODO : Check max number

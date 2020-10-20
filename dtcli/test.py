@@ -1,8 +1,14 @@
+"""
+    File containing all the
+    functions testing
+    the informations retrieved
+"""
+
 from sys import exit as sexit
 import locale
 import emoji
 
-def test(ttype, lines, lines_number, over, under):
+def test(ttype, lines, lines_number, over, under, title):
     """
         Test each conditions the user
         asked for
@@ -13,8 +19,10 @@ def test(ttype, lines, lines_number, over, under):
         result = len(lines) >= over
     elif ttype == 'under':
         result = len(lines) <= under
+    elif ttype == 'force':
+        result = title
     else:
-        print("Error while parsing arguments")
+        print("Error while parsing testing arguments")
         sexit(1)
     return result
 
