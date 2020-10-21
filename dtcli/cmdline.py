@@ -1,3 +1,8 @@
+"""
+    File containing the main
+    interactions with the
+    command line.
+"""
 import argparse
 from dtcli import __version__
 from dtcli.test import test_lang, test_emojis
@@ -32,42 +37,42 @@ def cmd_parser():
         Argument Parser
     """
     # Argument parser creation
-    ap = argparse.ArgumentParser(usage='%(prog)s [options]',
-                                 description='A DTC querying tool',
-                                 epilog='Please refer to dtcli(1) for more informations')
+    a_p = argparse.ArgumentParser(usage='%(prog)s [options]',
+                                  description='A DTC querying tool',
+                                  epilog='Please refer to dtcli(1) for more informations')
 
     # Group to avoid having force-title and hide-title at the same time
-    gr = ap.add_mutually_exclusive_group()
+    title_gr = a_p.add_mutually_exclusive_group()
 
     # Basic utilities
-    ap.add_argument('--verbose', '-v', dest='verbose', action='store_true',
-                    default=False, help="Increase output verbosity")
-    ap.add_argument("--ignore", "-i", dest='ignore', action='store_true',
-                    default=False, help="Don't stop on retreiving errors")
-    ap.add_argument('--version', action='version', version='%(prog)s ' + __version__)
+    a_p.add_argument('--verbose', '-v', dest='verbose', action='store_true',
+                     default=False, help="Increase output verbosity")
+    a_p.add_argument("--ignore", "-i", dest='ignore', action='store_true',
+                     default=False, help="Don't stop on retreiving errors")
+    a_p.add_argument('--version', action='version', version='%(prog)s ' + __version__)
 
-    ap.add_argument("--number", "-n", type=int, dest='number', action='store',
-                    default=-1, metavar="INT", help="Specify a number")
-    ap.add_argument("--hide-banner", "-b", dest='hide_banner', action='store_true',
-                    default=False, help="Hide the informations")
+    a_p.add_argument("--number", "-n", type=int, dest='number', action='store',
+                     default=-1, metavar="INT", help="Specify a number")
+    a_p.add_argument("--hide-banner", "-b", dest='hide_banner', action='store_true',
+                     default=False, help="Hide the informations")
 
     # Title Control
-    gr.add_argument("--hide-title", "-t", dest='hide_title', action='store_true',
-                    default=False, help="Hide the title of the joke")
-    gr.add_argument("--force-title", "-f", dest='force_title', action='store_true',
-                    default=False, help="Force the search for the joke with title")
+    title_gr.add_argument("--hide-title", "-t", dest='hide_title', action='store_true',
+                          default=False, help="Hide the title of the joke")
+    title_gr.add_argument("--force-title", "-f", dest='force_title', action='store_true',
+                          default=False, help="Force the search for the joke with title")
 
     # Conditions
-    ap.add_argument("--lines", "-l", type=int, dest='lines', action='store',
-                    default=-1, metavar="INT", help="Search for a specific number of lines")
-    ap.add_argument("--over", "-o", type=int, dest='over', action='store',
-                    default=-1, metavar="INT", help="Search for a number of lines above specified")
-    ap.add_argument("--under", "-u", type=int, dest='under', action='store',
-                    default=-1, metavar="INT", help="Search for a number of lines below specified")
+    a_p.add_argument("--lines", "-l", type=int, dest='lines', action='store',
+                     default=-1, metavar="INT", help="Search for a specific number of lines")
+    a_p.add_argument("--over", "-o", type=int, dest='over', action='store',
+                     default=-1, metavar="INT", help="Search for a number of lines above specified")
+    a_p.add_argument("--under", "-u", type=int, dest='under', action='store',
+                     default=-1, metavar="INT", help="Search for a number of lines below specified")
 
-    ap.add_argument("--website", '-w', type=str, dest='website', action='store',
-                    default=test_lang(), metavar='NAME', help="Get the joke from that website",
-                    choices=['dtc', 'nsf', 'bash'])
+    a_p.add_argument("--website", '-w', type=str, dest='website', action='store',
+                     default=test_lang(), metavar='NAME', help="Get the joke from that website",
+                     choices=['dtc', 'nsf', 'bash'])
 
-    args = ap.parse_args()
+    args = a_p.parse_args()
     return args
