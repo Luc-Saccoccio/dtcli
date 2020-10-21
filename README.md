@@ -38,4 +38,4 @@ pipx install ./
 
 
 ## License
-MIT, refer to [LICENSE](https://github.com/Recidiviste/dtcli/blob/master/LICENSE) for complete text
+MIT, refer to [LICENSE](https://github.com/Luc-Saccoccio/dtcli/blob/master/LICENSE) for complete text
