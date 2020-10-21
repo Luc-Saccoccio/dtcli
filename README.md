@@ -27,6 +27,15 @@ pipx install ./
 - `-u/--under` : Works only for DTC and QDB, search only for the jokes containing under (inclusive) a specific number of lines.
 - `-w/--website` : Specify the website you want to take the jokes from. The possible values are `dtc`, `nsf`, `bash`.
 
+## To Do
+
+- [ ] Check for new posts on websites, and get the max allowed number.
+- [ ] Rework NSF, it seems to cause unknown problem : `Error 104, Connection reset by peer`
+- [ ] Reorganise the code (Of course...)
+- [ ] Comment the code
+- [ ] Add module and function docstring
+- [ ] Enhance installation (Posting it on PyPi)
+
 
 ## License
 MIT, refer to [LICENSE](https://github.com/Recidiviste/dtcli/blob/master/LICENSE) for complete text

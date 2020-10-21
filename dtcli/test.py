@@ -46,4 +46,4 @@ def test_lang():
     lang = locale.getdefaultlocale()[0][0:2]
     if lang == 'fr':
         return 'dtc'
-    return 'bashorg'
+    return 'bash'

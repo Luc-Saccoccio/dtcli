@@ -13,18 +13,18 @@ def main():
     """
     args = cmd_parser()
 
-    if args.website in ['dtc', 'bashorg']: # Only those websites are concerned by these options
-        if args.lines < -1 or args.lines == 0:
+    if args.website in ['dtc', 'bash']: # Only those websites are concerned by these options
+        if args.lines < -1 or args.lines == 0: # Test if lines option is done properly
             print("Lines must be above or equal 1")
             sexit(1)
-        if args.over < -1:
+        if args.over < -1: # Test if over option is done properly
             print("\"over\" must be over (hehe) or equal 1")
             sexit(1)
-        if args.under < -1 or args.under == 0:
+        if args.under < -1 or args.under == 0: # Test if under option is done properly
             print("\"under\" must be over (wat?) or equal 1")
             sexit(1)
-    url = {'dtc': "https://danstonchat.com/{}.html", 'nsf': "https://nuitsansfolie.com/nsf/{}", 'bash': "http://www.bash.org/?{}"}[args.website]
-    website = {'dtc': 'DTC', 'nsf': 'NSF', 'bash': 'QDB'}[args.website]
+    url = {'dtc': "https://danstonchat.com/{}.html", 'nsf': "https://nuitsansfolie.com/nsf/{}", 'bash': "http://www.bash.org/?{}"}[args.website] # URL matrice
+    website = {'dtc': 'DTC', 'nsf': 'NSF', 'bash': 'QDB'}[args.website] # Name to print
 
     if args.number >= 1: # If a number is specified, just take it
         number = args.number
@@ -60,13 +60,14 @@ def main():
                 else:
                     answers = {}
     else:
+        soup = None
         while not soup:
             number = randint(0, 20689) # TODO : Check max number
             tmp_url = url.format(number)
             if args.verbose:
                 print(color.YELLOW + "testing {} n°{}, url {}".format(website, number, tmp_url) + color.END)
             soup = get_soup(tmp_url, number, args.ignore)
-        lines, _, _ = preprocess(soup, args.number, args.website)
+        lines, title, _ = preprocess(soup, args.number, args.website)
         content = process(lines, number, website)
 
     if not args.hide_banner:
