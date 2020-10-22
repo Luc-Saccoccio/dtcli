@@ -41,19 +41,20 @@ def main():
         answers = {'force': None, 'lines': None, 'over': None, 'under': None}
         if args.verbose:
             print("Required conditions: ", conditions)
+            print(f'Ignoring: {args.ignore}')
         while conditions != answers:
             answers = {'force' : False, 'lines' : False, 'over' : False, 'under': False}
             number = randint(0, 20689) # TODO : Check both max numbers, automate their getting
             tmp_url = url.format(number)
             if args.verbose:
                 print(color.YELLOW + "testing {} n°{}, url {}".format(website, number, tmp_url) + color.END)
-            soup = get_soup(tmp_url, number, args.ignore)
+            soup = get_soup(tmp_url, args.ignore, args.verbose)
             if soup != '':
                 lines, title, title_exist = preprocess(soup, number, args.website)
                 if lines != ['']:
                     content = process(lines, number, args.website)
                     for condition in (c for c in conditions if conditions[c]):
-                        if args.verbose: print(color.PURPLE + "- testing {condition}" + color.END)
+                        if args.verbose: print(color.PURPLE + f'- testing {condition}' + color.END)
                         answers[condition] = test(condition, lines, args.lines, args.over,
                                                   args.under, title_exist)
                 else:
@@ -64,8 +65,8 @@ def main():
             number = randint(0, 20689) # TODO : Check max number
             tmp_url = url.format(number)
             if args.verbose:
-                print(color.YELLOW + "testing {} n°{}, url {}".format(website, number, tmp_url) + color.END)
-            soup = get_soup(tmp_url, number, args.ignore)
+                print(color.YELLOW + f'testing {website} n°{number}, url {tmp_url}'+ color.END)
+            soup = get_soup(tmp_url, args.ignore, args.verbose)
         lines, title, _ = preprocess(soup, args.number, args.website)
         content = process(lines, number, args.website)
 
