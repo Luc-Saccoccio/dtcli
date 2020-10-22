@@ -34,8 +34,7 @@ def main():
             print("Error : Soup's empty, I need another bowl")
             sexit(1)
         lines, title, _ = preprocess(soup, args.number, args.website)
-        content = process(lines, number, website)
-        # TODO : Test for NSF if the lines can be printed "as it"
+        content = process(lines, number, args.website)
     elif args.website in ['dtc', 'bash']: # Else, consider the other passed options
         conditions = {'force': (args.force_title and args.website == 'dtc'), 'lines': (args.lines != -1),
                       'over': (args.over != -1), 'under': (args.under != -1)}
@@ -59,7 +58,7 @@ def main():
                                                   args.under, title_exist)
                 else:
                     answers = {}
-    else:
+    else: # The case of NSF
         soup = None
         while not soup:
             number = randint(0, 20689) # TODO : Check max number
@@ -68,7 +67,7 @@ def main():
                 print(color.YELLOW + "testing {} n°{}, url {}".format(website, number, tmp_url) + color.END)
             soup = get_soup(tmp_url, number, args.ignore)
         lines, title, _ = preprocess(soup, args.number, args.website)
-        content = process(lines, number, website)
+        content = process(lines, number, args.website)
 
     if not args.hide_banner:
         banner(title, {'dtc': 'DTC', 'nsf': 'NSF', 'bash': 'QDB'}[args.website], number, tmp_url, args.hide_title)

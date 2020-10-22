@@ -6,6 +6,7 @@
 
 from sys import exit as sexit
 from bs4 import BeautifulSoup
+from textwrap3 import wrap
 import requests
 from dtcli.color import color
 
@@ -14,7 +15,13 @@ def get_soup(url, ignore, verbose):
     """
         Return parsed HTMl
     """
-    result = requests.get(url)
+    while True:
+        try:
+            result = requests.get(url)
+            break
+        except requests.ConnectionError as error:
+            if verbose:
+                print(f'Error while handling NSF : {error}')
     if result.status_code != 200:
         print(color.BOLD + color.YELLOW + "Retrieiving failed : url %s" % url
               + color.UNDERLINE + color.END)
@@ -32,6 +39,7 @@ def preprocess(soup, number, website):
         Return lines or complete text
         Title if DTC
     """
+    title, title_exist = None, False
     if website == 'dtc':
         base = soup.find('meta', attrs={'name': 'description'})
         title = str(soup.find('title'))
@@ -44,11 +52,9 @@ def preprocess(soup, number, website):
         message = base['content']
     elif website == 'nsf':
         base = soup.find('meta', attrs={'property': 'og:description'})
-        title, title_exist = None, False
         message = base['content']
     else:
         base = soup.find('p', attrs={'class': 'qt'})
-        title, title_exist = None, False
         message = base.text if base else ''
 
     lines = message.split("\n")
@@ -61,7 +67,8 @@ def process(lines, number, website): # Process the lines : format them, highligh
     """
     text = ""
     if website == 'nsf':
-        return '\n'.join(lines)
+        text = wrap(''.join(lines), 54)
+        return '\n'.join((line.center(54, " ") for line in text))
     try:
         for l in lines:
             if l == '':

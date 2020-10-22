@@ -30,11 +30,13 @@ pipx install ./
 ## To Do
 
 - [ ] Check for new posts on websites, and get the max allowed number.
-- [ ] Rework NSF, it seems to cause unknown problem : `Error 104, Connection reset by peer`
-- [ ] Reorganise the code (Of course...)
-- [ ] Comment the code
-- [ ] Add module and function docstring
-- [ ] Enhance installation (Posting it on PyPi)
+- [ ] Enhance NSF displaying (wrapping it better, cutting on `:` ?).
+- [ ] Reorganise the code (Of course...).
+- [ ] Comment the code.
+- [ ] Add module and function docstring.
+- [ ] Enhance installation (Posting it on PyPi).
+- [x] Rework NSF, it seems to cause unknown problem : `Error 104, Connection reset by peer`
+
 
 
 ## License
