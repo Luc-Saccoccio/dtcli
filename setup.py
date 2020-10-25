@@ -1,4 +1,6 @@
-import codecs
+import pypandoc
+import restructuredtext_lint as rst
+import os
 from setuptools import setup, find_packages
 from dtcli import __version__, __author__, __email__
 
@@ -6,10 +8,9 @@ from dtcli import __version__, __author__, __email__
 with open('requirements.txt') as f:
     requirements = [l for l in f.read().splitlines() if l]
 
-
-def long_description():
-    with codecs.open('README.md', 'rb') as readme:
-        return readme.read().decode('utf-8')
+if os.path.exists('README.md'):
+     long_description = pypandoc.convert_file('README.md', 'rst')
+     rst.lint(long_description)
 
 setup(
     name='dtcli',
@@ -20,7 +21,7 @@ setup(
     author_email=__email__,
     keywords='dtc, nsf, bash.org, cli',
     description='DTC/NSF/bash.org cli querying tool',
-    long_description=long_description(),
+    long_description=long_description,
     url='https://github.com/Luc-Saccoccio/dtcli',
 
     install_requires=requirements,
