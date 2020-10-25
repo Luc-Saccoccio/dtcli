@@ -9,7 +9,7 @@ from dtcli.test import test_lang, test_emojis
 from dtcli.color import color
 
 
-def banner(title, website, number, url, hide_title):
+def banner(title: str, website: str, number: int, url: str, hide_title: bool) -> None:
     """
         Print banner and joke
     """
@@ -32,7 +32,7 @@ def banner(title, website, number, url, hide_title):
         print("└" + (banner_length + 2)*"─" + "┘")
 
 
-def cmd_parser():
+def cmd_parser() -> argparse.Namespace:
     """
         Argument Parser
     """
@@ -72,7 +72,7 @@ def cmd_parser():
 
     a_p.add_argument("--website", '-w', type=str, dest='website', action='store',
                      default=test_lang(), metavar='NAME', help="Get the joke from that website",
-                     choices=['dtc', 'nsf', 'bash'])
+                     choices=['dtc', 'nsf', 'qdb'])
 
     args = a_p.parse_args()
     return args
