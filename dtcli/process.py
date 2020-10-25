@@ -8,10 +8,34 @@ from sys import exit as sexit
 from bs4 import BeautifulSoup
 from textwrap3 import wrap
 import requests
+from re import findall
 from dtcli.color import color
 
+def get_max_number(website: str) -> int:
+    """
+        Getting the max number of dtc/qdb/nsf
+    """
+    if website == 'dtc':
+        latest = requests.get('https://danstonchat.com/latest.html')
+        soup = BeautifulSoup(latest.content, 'html.parser')
+        items = soup.find('div', {'class': 'items'})
+        result = items.findChildren()
+        nums = findall(r'\d+', str(result[1]))
+        return int(nums[1])
+    elif website == 'qdb':
+        latest = requests.get('http://bash.org/?latest')
+        soup = BeautifulSoup(latest.content, 'html.parser')
+        result = soup.find('p', {'class': 'quote'})
+        nums = findall(r'\d+', str(result))
+        return int(nums[0])
+    elif website == 'nsf':
+        latest = requests.get('https://nuitsansfolie.com/slider')
+        soup = BeautifulSoup(latest.content, 'html.parser')
+        result = soup.find('h1', {'class': 'anecdote-title'})
+        nums = findall(r'\d+', str(result))
+        return int(nums[1])
 
-def get_soup(url, ignore, verbose):
+def get_soup(url: str, ignore: bool, verbose: bool) -> BeautifulSoup:
     """
         Return parsed HTMl
     """
@@ -33,7 +57,7 @@ def get_soup(url, ignore, verbose):
             return ''
     return BeautifulSoup(result.content, 'html.parser')
 
-def preprocess(soup, number, website):
+def preprocess(soup: BeautifulSoup, number: int, website: str) -> tuple:
     """
         Preprocess parsed HTML
         Return lines or complete text
@@ -60,7 +84,7 @@ def preprocess(soup, number, website):
     lines = message.split("\n")
     return lines, title, title_exist
 
-def process(lines, number, website): # Process the lines : format them, highlight and stuff
+def process(lines: list, number: int, website: str) -> str: # Process the lines : format them, highlight and stuff
     """
         Process the lines :
         Highlight and stuff
@@ -107,6 +131,8 @@ def process(lines, number, website): # Process the lines : format them, highligh
             else:
                 text += ''.join(l) + "\n"
     except IndexError:
-        print("Error while processing {} n°{}, url {}".format(website, number, {'dtc': "https://danstonchat.com/{}.html", 'bash': "bash.org/?{}"}[website].format(number)))
+        print(f'Error while processing {website} n°{number}, url {{}}'.format(
+            {'dtc': "https://danstonchat.com/{}.html", 'qdb': "bash.org/?{}"}[website].format(
+                number)))
         sexit(1)
     return text[:-1]
