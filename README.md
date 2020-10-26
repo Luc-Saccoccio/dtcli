@@ -34,6 +34,8 @@ pipx install ./
 - [ ] Comment the code.
 - [ ] Enhance installation (Posting it on PyPi).
 - [ ] Make it faster, it's so slooooooow.
+  - [ ] Implement caching of jokes.
+  - [ ] Implement caching of max number, based on the date.
 - [x] Check for new posts on websites, and get the max allowed number.
 - [x] Add module annotations.
 - [x] Add module and function docstring.
