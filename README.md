@@ -1,3 +1,6 @@
+# WARNING
+**THIS PROGRAM IS BLOATED __AS HELL__: PLEASE AVOID USING IT**
+
 # dtcli
 
 ## Introduction
